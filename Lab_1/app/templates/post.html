@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <h1 class="mt-3 text-center">{{ post.title }}</h1>
+            <h6 class="text-center">{{ post.author }}, {{ post.date }}</h6>
+            <img class="card-img-top post-img rounded mx-auto d-block my-3" src="{{ url_for('static', filename='images/' + post.image_id) }}" alt="Card image cap">
+            <div class="text-justify d-flex align-items-center">
+            <p>{{ post.text }}</p>
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">Оставьте комментарий</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
+            <button type="button" class="btn btn-primary btn-lg">Отправить</button>
+            <div class="m-4">
+                {% for comment in post.comments %}
+                    <div class="d-flex flex-column">
+                        <div class="d-flex mt-4">
+                            <div class="flex-shrink-0">
+                                <img src="{{ url_for('static', filename='images/avatar.jpg') }}" class="rounded-circle" width="80" height="80">
+                            </div>
+                            <div class="flex-grow-1 text-start">
+                                <h5>{{ comment.author }}</h5>
+                                <p class="mb-0">{{ comment.text | truncate(100)}}</p>
+                            </div>
+                        </div>
+                        
+                        {% for reply in comment.replies %}
+                            <div class="d-flex mt-4 ms-5">
+                                <div class="flex-shrink-0">
+                                    <img src="{{ url_for('static', filename='images/avatar.jpg') }}" class="rounded-circle" width="80" height="80">
+                                </div>
+                                <div class="flex-grow-1 text-start">
+                                    <h5>{{ reply.author }}</h5>
+                                    <p>{{ reply.text | truncate(100)}}</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
