@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Введите номер для проверки</h1>
+
+    <form method="POST">
+        <div class="mb-3">
+            <input class="form-control is-{% if flag==0 %}in{% endif %}valid" type="text" name="number" id="number" value="{{ request.form.get('number', '') }}">
+            <div class="{% if flag==0 %}in{% endif %}valid-feedback">
+                <h3>
+                    {{ msg }}
+                </h3>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Отправить</button>
+        </div>
+    </form>
+    
+
+
+{% endblock %}
