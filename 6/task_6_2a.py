@@ -17,17 +17,17 @@
 
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 """
-ip_addres = input("Введите IP адресс ")
+ip_addres = input("Введите IP адрес: ")
 correct_ip = True
 if len(ip_addres.split(".")) == 4:
    for k in ip_addres.split("."):
-      if not (k.isdigit() and int(k) < 256 and int (k) > 0):
+      if not (k.isdigit() and int(k) < 256 and int (k) >= 0):
          correct_ip = False
          break
 else:
    correct_ip = False
 
-if correct_ip:        
+if correct_ip:
    first_byte = int(ip_addres.split(".")[0])
    if first_byte > 0 and first_byte < 224:
       print("unicast")
@@ -40,4 +40,6 @@ if correct_ip:
    else:
       print("unused")
 else:
+   print("Вы ввели неккоректный ip адресc")
+
    print("Вы ввели неккоректный ip адресc")
