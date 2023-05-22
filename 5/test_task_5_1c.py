@@ -81,3 +81,9 @@ def test_task_sw1_wrong_param(capsys, monkeypatch):
     assert (
         correct_stdout in out.strip()
     ), "На стандартный поток вывода выводится неправильный вывод"
+    
+print("Введите имя устройства: ")
+name = input()
+print("Введите имя параметра (" + ', '.join(list(london_co[name])) + "): ")
+parameter = input()
+print(london_co[name].get(parameter, 'Такого параметра нет'))
