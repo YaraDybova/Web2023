@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+
+    <h2 class="my-3 text-center text-uppercase font-weight-bold">Просмотр книги</h2>
+    
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>Название книги</td>
+                <td>{{ book.title }}</td>
+            </tr>
+            <tr>
+                <td>Жанры</td>
+                <td>
+                    {% for genre in book_genre %}
+                    {% if genre.books_id == book.id %}{{ genre.genre.genre_name }}</br>{% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+            <td>Автор</td>
+            <td>{{ book.author }}</td>
+        </tr>
+        <tr>
+            <td>Издательство</td>
+            <td>{{ book.publisher }}</td>
+        </tr>
+        <tr>
+            <td>Год</td>
+            <td>{{ book.year }}</td>
+        </tr>
+        <tr>
+            <td>Описание книги</td>
+            <td>{{ book.description|safe }}</td>
+        </tr>
+    </tbody>
+</table>
+<div class="col-md-3 mb-3 mb-md-0 d-flex align-items-center justify-content-center">
+    <div class="course-logo" style="background-image: url({{ img }});">
+    </div>
+</div>
+{% if current_user.is_authenticated and not review %}
+<div class="text-center my-3">
+    <a class="btn btn-lg btn-dark" href="{{ url_for('book.review', book_id=book.id) }}">Оставить отзыв</a>
+</div>
+{% endif %}
+<h2 class="my-3 text-center text-uppercase font-weight-bold">Рецензии</h2>
+{% if review %}
+<div class="review-block">
+    <div class="mb-1 form-group">
+        <label><b>Ваша рецензия</b></label>
+        <div class="review-text">{{ review.text|safe }}</div>
+    </div>
+    <div class="mb-3 form-group">
+        <label><b>Оценка</b></label>
+        <select class="form-control" name="mark" disabled>
+            {% if review.rating == 5 %}<option value="5">Отлично</option>{% endif %}
+            {% if review.rating == 4 %}<option value="4">Хорошо</option>{% endif %}
+            {% if review.rating == 3 %}<option value="3">Удовлетворительно</option>{% endif %}
+            {% if review.rating == 2 %}<option value="2">Неудовлетворительно</option>{% endif %}
+            {% if review.rating == 1 %}<option value="1">Плохо</option>{% endif %}
+            {% if review.rating == 0 %}<option value="0">Ужасно</option>{% endif %}
+        </select>
+    </div>
+</div>
+{% endif %}
+    {% for other_review in other_reviews %}
+    <div class="review-block">
+        <div class="mb-1 form-group">
+            <label><i>{{ other_review.user.first_name + ' ' + other_review.user.last_name }}</i> - <b>Рецензия</b></label>
+            <div class="review-text">{{ other_review.text|safe }}</div>
+        </div>
+        <div class="mb-3 form-group">
+            <label><b>Оценка</b></label>
+            <select class="form-control" name="mark" disabled>
+                {% if other_review.rating == 5 %}<option value="5">Отлично</option>{% endif %}
+                {% if other_review.rating == 4 %}<option value="4">Хорошо</option>{% endif %}
+                {% if other_review.rating == 3 %}<option value="3">Удовлетворительно</option>{% endif %}
+                {% if other_review.rating == 2 %}<option value="2">Неудовлетворительно</option>{% endif %}
+                {% if other_review.rating == 1 %}<option value="1">Плохо</option>{% endif %}
+                {% if other_review.rating == 0 %}<option value="0">Ужасно</option>{% endif %}
+            </select>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

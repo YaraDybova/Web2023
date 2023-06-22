@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <h2 class="my-3 text-center text-uppercase font-weight-bold">Модерации рецензии</h2>
+
+    <div class="review-block">
+            <div class="mb-1 form-group">
+                <label><b>Имя пользователя:</b> <i>{{ review.user.get_full_name() }}</i></label>
+            </div>
+            <div class="mb-1 form-group">
+                <label><b>Название книги:</b> <i>{{ review.book.title }}</i></label>
+            </div>
+            <div class="mb-1 form-group">
+                <label><b>Текст рецензии</b></label>
+                <div class="review-text">{{ review.text|safe }}</div>
+            </div>
+            <div class="mb-1 form-group">
+                <label><b>Дата добавления рецензии:</b> <i>{{ review.created_at }}</i></label>
+            </div>
+            <div class="mb-3 form-group">
+                <label><b>Оценка</b></label>
+                <select class="form-control" name="mark" disabled>
+                    {% if review.rating == 5 %}<option value="5">Отлично</option>{% endif %}
+                    {% if review.rating == 4 %}<option value="4">Хорошо</option>{% endif %}
+                    {% if review.rating == 3 %}<option value="3">Удовлетворительно</option>{% endif %}
+                    {% if review.rating == 2 %}<option value="2">Неудовлетворительно</option>{% endif %}
+                    {% if review.rating == 1 %}<option value="1">Плохо</option>{% endif %}
+                    {% if review.rating == 0 %}<option value="0">Ужасно</option>{% endif %}
+                </select>
+            </div>
+            <div class="mb-3 form-group d-flex flex-row">
+                <form action="" method="POST">
+                    <input type="checkbox" name="confirm" value="reject" checked class="d-none">
+                    <button type="submit" class="btn btn-danger">Отклонить</button>
+                </form>
+                <form action="" method="POST">
+                    <input type="checkbox" name="confirm" value="confirm" checked class="d-none">
+                    <button type="submit" class="btn btn-primary">Принять</button>
+                </form>
+            </div>
+        </div>
+</div>
+
+{% endblock %}
